@@ -13,7 +13,8 @@ export class HttpService {
 
   private CLIENT_ID: string = "xyz123";
   private CLIENT_SECRET: string = "ssh-password";
-  private GRANT_TYPE: string = 'Authorization Code';
+  private GRANT_TYPE: string = 'code';
+  // private GRANT_TYPE: string = 'Authorization Code';
 
   private token: string;
   private adminToken: string;
@@ -56,21 +57,18 @@ export class HttpService {
     // }));
   }
 
-  login(email: string, password: string) {
-
+  login() {
     const tokenHeader = new Headers({
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Basic ' + btoa(this.CLIENT_ID + ':' + this.CLIENT_SECRET)
     });
-
     const request = new HttpParams()
-      .set('grant_type', this.GRANT_TYPE)
-      .set('scope', '0')
-      .set('username', email)
-      .set('password', password)
+      .set('grant_type', 'code')
+      // .set('scope', '0')
+      // .set('username', email)
+      // .set('password', password)
       .toString();
-
     this.http
       .post(this.accessTokenUrl, request, { headers: tokenHeader })
       .subscribe(

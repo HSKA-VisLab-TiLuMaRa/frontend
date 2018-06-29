@@ -10,7 +10,7 @@ import { CatalogService } from "./../catalog.service";
 export class CatalogComponent implements OnInit {
 
   constructor(
-    catalogService: CatalogService
+    private catalogService: CatalogService
   ) { }
 
   private searchForm: any;
