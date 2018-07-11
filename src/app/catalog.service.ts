@@ -34,7 +34,7 @@ export class CatalogService {
     return this.httpService.get(this.url + "/categories/" + id);
   }
 
-  getAllCategorys(){
+  getAllCategories(){
     return this.httpService.get(this.url + "/categories");
   }
 
