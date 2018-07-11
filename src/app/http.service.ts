@@ -48,7 +48,7 @@ export class HttpService {
     console.log('I am getting called!');
     if (this.token) {
       headers.append('Authorization', 'Bearer ' + this.token);
-      headers.append('Access-Control-Allow-Origin', '*');
+
     }
     return headers;
   }
