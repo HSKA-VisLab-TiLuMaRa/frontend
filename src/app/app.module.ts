@@ -10,7 +10,6 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { HttpService } from './http.service';
 import { CatalogService } from './catalog.service';
@@ -20,7 +19,6 @@ import { UserService } from './user.service';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     CatalogComponent
   ],
   imports: [
