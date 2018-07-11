@@ -20,6 +20,7 @@ export class HttpService {
   private adminToken: string;
   private baseurl: string = 'http://localhost:8081/API/public/api/';
   private authUrl: string = 'http://localhost:8099/dialog/authorize';
+  private loginUrl: string = 'http://localhost:8099/login';
   private accessTokenUrl: string = 'http://localhost:8099/oauth/token';
   // private baseurl: string = 'https://api.competeleague.com/entity/';
   // private baseurl: string = 'http://localhost:9000/API/entity/'; // for local API / DB access
@@ -34,6 +35,7 @@ export class HttpService {
   }
 
   setToken(token: string) {
+    console.log('TOKEN', token);
     this.token = token;
     localStorage.setItem('token', token);
   }
@@ -43,9 +45,12 @@ export class HttpService {
   }
 
   createAuthorizationHeader(headers: Headers) {
+    console.log('I am getting called!');
     if (this.token) {
       headers.append('Authorization', 'Bearer ' + this.token);
+      headers.append('Access-Control-Allow-Origin', '*');
     }
+    return headers;
   }
 
   handleError(err: string) {
@@ -57,61 +62,29 @@ export class HttpService {
     // }));
   }
 
-  login() {
-    const tokenHeader = new Headers({
-      'Cache-Control': 'no-cache',
-      'Content-Type': 'application/x-www-form-urlencoded',
+  login(username: string, password: string) {
+    const headers = new Headers({
+      'Content-Type': 'application/json',
       'Authorization': 'Basic ' + btoa(this.CLIENT_ID + ':' + this.CLIENT_SECRET)
     });
-    const request = new HttpParams()
-      .set('grant_type', 'code')
-      // .set('scope', '0')
-      // .set('username', email)
-      // .set('password', password)
-      .toString();
-    this.http
-      .post(this.accessTokenUrl, request, { headers: tokenHeader })
-      .subscribe(
-      tokenData => {
-        console.log('LOGIN: Data received.');
-        // console.log(tokenData);
-        this.setToken(tokenData['access_token']);
-        console.log('Access token:', this.token);
-        //
-        // const userHeader = new HttpHeaders({
-        //   'Cache-Control': 'no-cache',
-        //   'Authorization': this.getBearerToken()
-        // });
-
-        // this.http
-        //   .get(authConfig.userEndpoint, { headers: userHeader })
-        //   .subscribe(
-        //   userData => {
-        //     console.log('USER ROLE: Data received.');
-        //     // console.log(userData);
-        //     this.userRole = userData['authorities'][0]['authority'];
-        //     console.log('Role:', this.userRole);
-        //     this.redirect();
-        //   },
-        //   userError => {
-        //     console.error('USER ROLE: Error.');
-        //     console.error(userError);
-        //   },
-        //   () => console.log('USER ROLE: Done.')
-        //   );
-      },
-      tokenError => {
-        console.error('LOGIN: Error.');
-        console.error(tokenError);
-      },
-      () => console.log('LOGIN: Done.')
-      );
+    const body = {
+      "grant_type": "password",
+      "password": password,
+      "username": username
+    };
+    let self: any = this;
+    return this.http
+      .post(this.accessTokenUrl, body, { headers: headers });
+      // .subscribe((res: any) => {
+      //   console.log('RES', res);
+      //   self.setToken(res._body.access_token);
+      // });
   }
 
   get(url: string) {
     let headers = new Headers();
-    this.createAuthorizationHeader(headers);
-    return this.http.get(this.baseurl + url, {
+    headers = this.createAuthorizationHeader(headers);
+    return this.http.get(url, {
       headers: headers
     }).catch(e => {
       this.handleError(e.json().error_msg);
@@ -129,8 +102,8 @@ export class HttpService {
     let headers = new Headers(
       { 'Content-Type': 'application/json' }
     );
-    this.createAuthorizationHeader(headers);
-    return this.http.post(this.baseurl + url, data, {
+    headers = this.createAuthorizationHeader(headers);
+    return this.http.post(url, data, {
       headers: headers
     }).catch(e => {
       this.handleError(e.json().error_msg);
@@ -148,8 +121,8 @@ export class HttpService {
     let headers = new Headers(
       { 'Content-Type': 'application/json' }
     );
-    this.createAuthorizationHeader(headers);
-    return this.http.put(this.baseurl + url, data, {
+    headers = this.createAuthorizationHeader(headers);
+    return this.http.put(url, data, {
       headers: headers
     }).catch(e => {
       this.handleError(e.json().error_msg);
@@ -167,8 +140,8 @@ export class HttpService {
     let headers = new Headers(
       { 'Content-Type': 'application/json' }
     );
-    this.createAuthorizationHeader(headers);
-    return this.http.delete(this.baseurl + url, {
+    headers = this.createAuthorizationHeader(headers);
+    return this.http.delete(url, {
       headers: headers
     }).catch(e => {
       this.handleError(e.json().error_msg);
