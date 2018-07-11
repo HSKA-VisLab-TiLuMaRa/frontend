@@ -22,34 +22,54 @@ export class CatalogComponent implements OnInit {
   private searchForm: any;
   private loginForm: any;
   private products: any = [];
+  private categories: any = [];
 
   private loggedIn: boolean = false;
 
   login(form: any) {
     let self:any = this;
     this.httpService.login(form.username, form.password).subscribe((res:any) => {
+      this.loggedIn = true;
       console.log('RES', res._body);
       self.httpService.setToken(JSON.parse(res._body).access_token);
       self.catalogService.getAllProducts().subscribe((res: any) => {
         console.log('RES', res)
         self.products = res;
       });
+      self.catalogService.getAllCategories().subscribe((res: any) => {
+        console.log('RES', res)
+        self.categories = res;
+      });
     });
   }
 
   search(form: any) {
-    var products_ = this.catalogService.getAllProducts();
-    var toReturn = [];
-    products_.forEach(element => {
-      if (form.categoryId != null && form.categoryId != element.categoryId) {
-        return;
-      }
-      if (form.productName != '' && !form.productName.contains(element.productName)) {
-        return;
-      }
-      toReturn.push(element);
+    this.catalogService.getAllProducts().subscribe((res: any) => {
+      console.log('RES', res);
+      const toReturn = [];
+      res.forEach(element => {
+        if (form.categoryId != null && !this.getCategory(element.categoryId).contains(form.categoryId)) {
+          console.log('a');
+          return;
+        }
+        if (form.productName !== '' && !element.name.contains(form.productName)) {
+          console.log('b');
+          return;
+        }
+        toReturn.push(element);
+      });
+      this.products = toReturn;
     });
-    this.products = toReturn;
+
+  }
+
+  getCategory(id) {
+   const category = this.categories.find(x => x.id === id);
+     if (category) {
+       return category.name;
+     } else {
+       return '';
+     }
   }
 
   ngOnInit() {
