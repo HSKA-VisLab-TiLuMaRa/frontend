@@ -1,0 +1,11 @@
+.productName {
+    font-weight: bold;
+}
+
+.productPrice {
+    font-weight: bold,
+}
+
+.productDescription {
+    font-style: italic;
+}

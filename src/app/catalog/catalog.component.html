@@ -34,7 +34,20 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      some sort of table
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Details</th>
+        </tr>
+        <tr *ngFor="product in products">
+          <td>{{ product.id }}</td>
+          <td class="productName">{{ product.name }}</td>
+          <td class="productPrice">{{ product.price }}</td>
+          <td class="productDescription">{{ product.details }}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>

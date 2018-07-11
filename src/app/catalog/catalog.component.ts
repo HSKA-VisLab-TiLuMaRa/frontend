@@ -32,13 +32,24 @@ export class CatalogComponent implements OnInit {
       self.httpService.setToken(JSON.parse(res._body).access_token);
       self.catalogService.getAllProducts().subscribe((res: any) => {
         console.log('RES', res)
-        // self.products = res;
+        self.products = res;
       });
     });
   }
 
   search(form: any) {
-
+    var products_ = this.catalogService.getAllProducts();
+    var toReturn = [];
+    products_.forEach(element => {
+      if (form.categoryId != null && form.categoryId != element.categoryId) {
+        return;
+      }
+      if (form.productName != '' && !form.productName.contains(element.productName)) {
+        return;
+      }
+      toReturn.push(element);
+    });
+    this.products = toReturn;
   }
 
   ngOnInit() {
@@ -55,7 +66,7 @@ export class CatalogComponent implements OnInit {
       let self: any = this;
       self.catalogService.getAllProducts().subscribe((res: any) => {
         console.log('RES', res)
-        // self.products = res;
+        self.products = res;
       });
     }
   }
