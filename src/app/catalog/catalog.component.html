@@ -41,7 +41,7 @@
           <th>Price</th>
           <th>Details</th>
         </tr>
-        <tr *ngFor="product in products">
+        <tr *ngFor="let product of products">
           <td>{{ product.id }}</td>
           <td class="productName">{{ product.name }}</td>
           <td class="productPrice">{{ product.price }}</td>
