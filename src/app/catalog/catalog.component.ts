@@ -78,9 +78,9 @@ export class CatalogComponent implements OnInit {
     console.log(form);
     let user = {
       username: form.newUsername,
+      password: form.newPassword,
       firstname: form.firstname,
       lastname: form.lastname,
-      password: form.newPassword,
       roleId: 0
     };
     let self: any = this;
