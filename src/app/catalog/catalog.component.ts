@@ -127,6 +127,7 @@ export class CatalogComponent implements OnInit {
       self.catalogService.getAllProducts().subscribe((res: any) => {
         console.log('RES', res);
         self.products = res;
+        this.dataSource = new MatTableDataSource(res);
       });
       self.catalogService.getAllCategories().subscribe((res: any) => {
         console.log('RES', res)

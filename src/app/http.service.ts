@@ -48,7 +48,8 @@ export class HttpService {
   }
 
   createAuthorizationHeader(headers: Headers) {
-    if (this.token) {
+    console.log('HEADERS', this.token, typeof this.token);
+    if (this.token !== 'null' && this.token !== null && this.token !== undefined && this.token !== 'undefined') {
       headers.append('Authorization', 'Bearer ' + this.token);
     }
     return headers;
