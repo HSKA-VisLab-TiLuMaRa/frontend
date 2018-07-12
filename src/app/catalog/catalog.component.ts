@@ -32,7 +32,7 @@ export class CatalogComponent implements OnInit {
   private categories: any = [];
 
   dataSource;
-  displayedColumns = ['id', 'name', 'price', 'details'];
+  displayedColumns = ['id', 'name', 'price', 'category', 'details'];
   private userid: number = 5;
 
   private loggedIn: boolean = false;

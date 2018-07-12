@@ -77,6 +77,10 @@
           <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
           <mat-cell *matCellDef="let product"> {{product.price}} &euro; </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{getCategory(product.categoryId)}} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="details">
           <mat-header-cell *matHeaderCellDef> Details </mat-header-cell>
           <mat-cell *matCellDef="let product"> {{product.details}} </mat-cell>
