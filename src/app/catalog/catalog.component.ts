@@ -81,7 +81,7 @@ export class CatalogComponent implements OnInit {
       firstname: form.firstname,
       lastname: form.lastname,
       password: form.newPassword,
-      roleid: 0
+      roleId: 0
     };
     let self: any = this;
     self.userService.createUser(user).subscribe((res: any) => {
