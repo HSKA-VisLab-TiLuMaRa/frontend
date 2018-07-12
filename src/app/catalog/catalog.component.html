@@ -11,6 +11,26 @@
     </div>
     <button type="submit" class="btn btn-primary" (click)="login(loginForm.value)">Login</button>
   </form>
+  <h3>Register New User</h3>
+  <form [formGroup]="registerForm">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input formControlName="username" type="text" class="form-control" id="username" placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label for="firstname">firstname</label>
+      <input formControlName="firstname" type="text" class="form-control" id="firstname" placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label for="lastname">lastname</label>
+      <input formControlName="lastname" type="text" class="form-control" id="lastname" placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input formControlName="password" type="password" class="form-control" id="password" placeholder="admin">
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="register(registerForm.value)">Register</button>
+  </form>
 </div>
 
 <div *ngIf="loggedIn">
@@ -21,11 +41,11 @@
       <form [formGroup]="searchForm">
         <div class="form-group">
           <label for="categoryId">Category</label>
-          <input formControlName="categoryId" type="text" class="form-control" id="categoryId" placeholder="Category">
+          <input formControlName="categoryId" type="text" class="form-control" id="categoryId" placeholder="Category" default="">
         </div>
         <div class="form-group">
           <label for="productName">Product Name</label>
-          <input formControlName="productName" type="text" class="form-control" id="productName" placeholder="Name">
+          <input formControlName="productName" type="text" class="form-control" id="productName" placeholder="Name" default="">
         </div>
         <button type="submit" class="btn btn-primary" (click)="search(searchForm.value)">search</button>
       </form>
@@ -50,6 +70,11 @@
           <td>{{getCategory(product.categoryId)}}</td>
         </tr>
       </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-primary" (click)="logout()">Logout</button>
     </div>
   </div>
 </div>

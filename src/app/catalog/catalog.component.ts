@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CatalogService } from "./../catalog.service";
+import { UserService } from "./../user.service";
 import { HttpService } from './../http.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
@@ -14,6 +15,7 @@ export class CatalogComponent implements OnInit {
 
   constructor(
     private catalogService: CatalogService,
+    private userService: UserService,
     private httpService: HttpService,
     private router: Router,
     private route: ActivatedRoute
@@ -21,16 +23,18 @@ export class CatalogComponent implements OnInit {
 
   private searchForm: any;
   private loginForm: any;
+  private registerForm: any;
   private products: any = [];
   private categories: any = [];
+
+  private userid:number = 5;
 
   private loggedIn: boolean = false;
 
   login(form: any) {
-    let self:any = this;
-    this.httpService.login(form.username, form.password).subscribe((res:any) => {
+    let self: any = this;
+    this.httpService.login(form.username, form.password).subscribe((res: any) => {
       this.loggedIn = true;
-      console.log('RES', res._body);
       self.httpService.setToken(JSON.parse(res._body).access_token);
       self.catalogService.getAllProducts().subscribe((res: any) => {
         console.log('RES', res)
@@ -63,17 +67,40 @@ export class CatalogComponent implements OnInit {
 
   }
 
+  register(form: any) {
+    console.log(form);
+    let user = {
+      id: this.userid++,
+      username: form.username,
+      firstname: form.firstname,
+      lastname: form.lastname,
+      password: form.password,
+      roleid: 0
+    };
+    let self: any = this;
+    self.userService.createUser(user).subscribe((res: any) => {
+      console.log(res);
+    });
+  }
+
+
   getCategory(id) {
-   const category = this.categories.find(x => x.id === id);
-     if (category) {
-       return category.name;
-     } else {
-       return '';
-     }
+    const category = this.categories.find(x => x.id === id);
+    if (category) {
+      return category.name;
+    } else {
+      return '';
+    }
+  }
+
+  logout() {
+    this.httpService.setToken('null');
+    this.loggedIn = this.httpService.isLoggedIn();
   }
 
   ngOnInit() {
     let self: any = this;
+    this.loggedIn = this.httpService.isLoggedIn()
     this.searchForm = new FormGroup({
       categoryId: new FormControl(),
       productName: new FormControl()
@@ -82,11 +109,21 @@ export class CatalogComponent implements OnInit {
       username: new FormControl(),
       password: new FormControl()
     });
+    this.registerForm = new FormGroup({
+      username: new FormControl(),
+      password: new FormControl(),
+      firstname: new FormControl(),
+      lastname: new FormControl()
+    });
     if (this.loggedIn) {
       let self: any = this;
       self.catalogService.getAllProducts().subscribe((res: any) => {
         console.log('RES', res)
         self.products = res;
+      });
+      self.catalogService.getAllCategories().subscribe((res: any) => {
+        console.log('RES', res)
+        self.categories = res;
       });
     }
   }
