@@ -78,10 +78,10 @@ export class CatalogComponent implements OnInit {
     console.log(form);
     let user = {
       id: this.userid++,
-      username: form.username,
+      username: form.newUsername,
       firstname: form.firstname,
       lastname: form.lastname,
-      password: form.password,
+      password: form.newPassword,
       roleid: 0
     };
     let self: any = this;
