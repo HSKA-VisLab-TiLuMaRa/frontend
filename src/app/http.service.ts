@@ -112,7 +112,7 @@ export class HttpService {
       return Observable.throw(e);
     }).map((res: any) => {
       if (res.status !== 204) {
-        return res.json()
+        return res;
       } else {
         return res;
       }
