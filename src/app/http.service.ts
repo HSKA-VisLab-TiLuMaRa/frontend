@@ -48,7 +48,8 @@ export class HttpService {
   }
 
   createAuthorizationHeader(headers: Headers) {
-    if (this.token) {
+    console.log('HEADERS', this.token, typeof this.token);
+    if (this.token !== 'null' && this.token !== null && this.token !== undefined && this.token !== 'undefined') {
       headers.append('Authorization', 'Bearer ' + this.token);
     }
     return headers;
@@ -111,7 +112,7 @@ export class HttpService {
       return Observable.throw(e);
     }).map((res: any) => {
       if (res.status !== 204) {
-        return res.json()
+        return res;
       } else {
         return res;
       }

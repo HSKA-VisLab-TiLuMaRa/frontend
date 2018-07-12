@@ -8,7 +8,7 @@ export class UserService {
 
   constructor(private httpService: HttpService) { }
 
-  private url:string = "http://localhost:8081/user-management-api/users";
+  private url:string = "http://localhost:8081/user-api/users";
 
   getOneUser(id:number){
     return this.httpService.get(this.url + "/" + id);
