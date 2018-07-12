@@ -33,7 +33,7 @@ export class CatalogComponent implements OnInit {
 
   dataSource;
   displayedColumns = ['id', 'name', 'price', 'details'];
-  private userid:number = 5;
+  private userid: number = 5;
 
   private loggedIn: boolean = false;
 
@@ -125,7 +125,7 @@ export class CatalogComponent implements OnInit {
     if (this.loggedIn) {
       let self: any = this;
       self.catalogService.getAllProducts().subscribe((res: any) => {
-        console.log('RES', res)
+        console.log('RES', res);
         self.products = res;
       });
       self.catalogService.getAllCategories().subscribe((res: any) => {
@@ -150,5 +150,5 @@ export class ProductDataSource extends DataSource<any> {
   connect(): Observable<any[]> {
     return Observable.of(this.products);
   }
-  disconnect() {}
+  disconnect() { }
 }

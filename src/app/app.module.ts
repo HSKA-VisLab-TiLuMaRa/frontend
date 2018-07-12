@@ -14,7 +14,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { HttpService } from './http.service';
 import { CatalogService } from './catalog.service';
 import { UserService } from './user.service';
-import { MatTableModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatTableModule, MatCardModule, MatFormFieldModule, MatInputModule, MatToolbarModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
@@ -33,7 +33,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
