@@ -1,4 +1,6 @@
-<div *ngIf="!loggedIn">
+
+<div class="flex-container">
+    <mat-card *ngIf="!loggedIn">
   <h3>Login Required</h3>
   <form [formGroup]="loginForm">
     <div class="form-group">
@@ -11,9 +13,9 @@
     </div>
     <button type="submit" class="btn btn-primary" (click)="login(loginForm.value)">Login</button>
   </form>
-</div>
-
+</mat-card>
 <div *ngIf="loggedIn">
+    <mat-card>
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
@@ -32,24 +34,30 @@
     </div>
     <div class="col-md-1"></div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Details</th>
-          <th>Category</th>
-        </tr>
-        <tr *ngFor="let product of products">
-          <td>{{ product.id }}</td>
-          <td class="productName">{{ product.name }}</td>
-          <td class="productPrice">{{ product.price }}</td>
-          <td class="productDescription">{{ product.details }}</td>
-          <td>{{getCategory(product.categoryId)}}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
+</mat-card>
+      <mat-card style="width: 80vw">
+        <mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let product"> {{product.id}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Product </mat-header-cell>
+            <mat-cell *matCellDef="let product"> {{product.name}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+            <mat-cell *matCellDef="let product"> {{product.price}} &euro; </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="details">
+            <mat-header-cell *matHeaderCellDef> Details </mat-header-cell>
+            <mat-cell *matCellDef="let product"> {{product.details}} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </mat-card>
 </div>

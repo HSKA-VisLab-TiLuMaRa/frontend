@@ -14,6 +14,8 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { HttpService } from './http.service';
 import { CatalogService } from './catalog.service';
 import { UserService } from './user.service';
+import { MatTableModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -26,7 +28,12 @@ import { UserService } from './user.service';
     RouterModule.forRoot(ROUTES),
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

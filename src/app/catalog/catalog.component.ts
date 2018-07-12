@@ -3,6 +3,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { CatalogService } from "./../catalog.service";
 import { HttpService } from './../http.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { DataSource } from '@angular/cdk/table';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import { MatTableDataSource } from '@angular/material';
 
 
 @Component({
@@ -24,6 +28,9 @@ export class CatalogComponent implements OnInit {
   private products: any = [];
   private categories: any = [];
 
+  dataSource;
+  displayedColumns = ['id', 'name', 'price', 'details'];
+
   private loggedIn: boolean = false;
 
   login(form: any) {
@@ -35,6 +42,7 @@ export class CatalogComponent implements OnInit {
       self.catalogService.getAllProducts().subscribe((res: any) => {
         console.log('RES', res)
         self.products = res;
+        this.dataSource = new MatTableDataSource(res);
       });
       self.catalogService.getAllCategories().subscribe((res: any) => {
         console.log('RES', res)
@@ -91,4 +99,20 @@ export class CatalogComponent implements OnInit {
     }
   }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+}
+
+export class ProductDataSource extends DataSource<any> {
+  constructor(private products: any) {
+    super();
+  }
+  connect(): Observable<any[]> {
+    return Observable.of(this.products);
+  }
+  disconnect() {}
 }
