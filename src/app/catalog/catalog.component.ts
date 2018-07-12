@@ -78,7 +78,7 @@ export class CatalogComponent implements OnInit {
     console.log(form);
     let user = {
       username: form.newUsername,
-      password: form.newPassword,
+      peter: form.peter,
       firstname: form.firstname,
       lastname: form.lastname,
       roleId: 0
@@ -117,7 +117,7 @@ export class CatalogComponent implements OnInit {
     });
     this.registerForm = new FormGroup({
       newUsername: new FormControl(),
-      newPassword: new FormControl(),
+      peter: new FormControl(),
       firstname: new FormControl(),
       lastname: new FormControl()
     });
